@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace HPlusSport2.Api.Models
 {
@@ -13,12 +14,16 @@ namespace HPlusSport2.Api.Models
         {
             get; set;
         }
-
+        [Required]
         public string Name
         {
             get; set;
         }
-        
+        [MaxLength(255)]
+        public string? Description
+        {
+            get; set;
+        }
         public decimal Price
         {
             get; set;
