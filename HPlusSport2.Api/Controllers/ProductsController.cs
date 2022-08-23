@@ -31,8 +31,14 @@ namespace HPlusSport2.Api.Controllers
 
             if (queryParameters.MinPrice != null && queryParameters.MaxPrice != null)
             {
-                products = products.Where(p => p.Price >= queryParameters.MinPrice.Value && 
+                products = products.Where(p => p.Price >= queryParameters.MinPrice.Value &&
                 p.Price <= queryParameters.MaxPrice.Value);
+            }
+
+            if (!string.IsNullOrEmpty(queryParameters.SearchTerm))
+            {
+                products = products.Where(p => p.Sku.ToLower().Contains(queryParameters.SearchTerm.ToLower()) ||
+               p.Name.ToLower().Contains(queryParameters.SearchTerm.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(queryParameters.Sku))
@@ -43,7 +49,7 @@ namespace HPlusSport2.Api.Controllers
             if (!string.IsNullOrEmpty(queryParameters.Name))
             {
                 products = products.Where(
-                    p => p.Name.ToLower().Contains(queryParameters.Name.ToLower()));           
+                    p => p.Name.ToLower().Contains(queryParameters.Name.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(queryParameters.SortBy))
