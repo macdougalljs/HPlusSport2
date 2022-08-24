@@ -95,7 +95,7 @@ namespace HPlusSport2.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct([FromRoute] int id, [FromBody] Product product) {
 
-            if (id != product.Id)
+            if (id != product.Id)  
             {
                 return BadRequest();
             }
@@ -112,9 +112,24 @@ namespace HPlusSport2.Api.Controllers
                 {
                     return NotFound();
                 }                            
-                throw; // HTTP 500?
+                throw; // possibly HTTP 500?
             }
             return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Product>> DeleteProduct(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+
+            return product; 
         }
     }
 }
