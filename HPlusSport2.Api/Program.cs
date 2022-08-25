@@ -1,5 +1,6 @@
 using HPlusSport2.Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +27,8 @@ builder.Services.AddApiVersioning(options =>   // needed to be added
     options.ReportApiVersions = true;
     options.DefaultApiVersion = new ApiVersion(1, 0);
     options.AssumeDefaultVersionWhenUnspecified = true;
+
+    options.ApiVersionReader = new HeaderApiVersionReader("X-API-Version");
 });
 
 var app = builder.Build();

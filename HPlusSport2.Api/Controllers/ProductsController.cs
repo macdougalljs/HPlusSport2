@@ -7,7 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace HPlusSport2.Api.Controllers
 {
     [ApiVersion("2.0")]
-    [Route("v{v:apiVersion}/products")]
+    // [Route("v{v:apiVersion}/products")] // now that it's in header versioning, removed
+    [Route("products")]
     [ApiController]
     public class ProductsV2_0Controller : ControllerBase
     {
@@ -157,7 +158,8 @@ namespace HPlusSport2.Api.Controllers
 
 
     [ApiVersion("1.0")]
-    [Route("v{v:apiVersion}/products")]
+    // [Route("v{v:apiVersion}/products")] // now that it's in header versioning, removed
+    [Route("products")]
     [ApiController]
     public class ProductsV1_0Controller : ControllerBase
     {
@@ -232,15 +234,19 @@ namespace HPlusSport2.Api.Controllers
 
             return CreatedAtAction(
                 "GetProduct",
-                new {id = product.Id} ,
+                new
+                {
+                    id = product.Id
+                },
                 product
                 );
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct([FromRoute] int id, [FromBody] Product product) {
+        public async Task<IActionResult> PutProduct([FromRoute] int id, [FromBody] Product product)
+        {
 
-            if (id != product.Id)  
+            if (id != product.Id)
             {
                 return BadRequest();
             }
@@ -256,7 +262,7 @@ namespace HPlusSport2.Api.Controllers
                 if (_context.Products.Find(id) == null)
                 {
                     return NotFound();
-                }                            
+                }
                 throw; // possibly HTTP 500?
             }
             return NoContent();
@@ -274,12 +280,12 @@ namespace HPlusSport2.Api.Controllers
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 
-            return product; 
+            return product;
         }
 
         [HttpPost]
         [Route("Delete")]
-        public async Task<IActionResult> DeleteMultiple([FromQuery]int[] ids)
+        public async Task<IActionResult> DeleteMultiple([FromQuery] int[] ids)
         {
 
             var products = new List<Product>();
