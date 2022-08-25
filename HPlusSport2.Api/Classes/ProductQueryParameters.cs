@@ -21,7 +21,7 @@
             get; set;
         }
 
-        public string SearchTerm
+        public string? SearchTerm
         {
             get; set;
         }

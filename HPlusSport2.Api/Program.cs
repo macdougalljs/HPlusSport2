@@ -1,4 +1,5 @@
 using HPlusSport2.Api.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,12 @@ builder.Services.AddDbContext<ShopContext>(options =>
     options.UseInMemoryDatabase("Shop");
 });  // needed to be added
 
+builder.Services.AddApiVersioning(options =>   // needed to be added
+{
+    options.ReportApiVersions = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+});
 
 var app = builder.Build();
 
