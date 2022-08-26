@@ -1,4 +1,4 @@
-﻿var url = "https://localhost:7176/products";
+﻿var url = "https://localhost:7090/products";
 
 var productsList = document.getElementById("products-list");
 if (productsList) {
